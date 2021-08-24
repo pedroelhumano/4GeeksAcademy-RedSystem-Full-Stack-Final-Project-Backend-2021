@@ -21,7 +21,7 @@ def handle_hello():
 @api.route('/lista_users', methods=['GET'])
 def get_users():
     query_user = User.query.all()
-    query_user = list(map(lambda x: x.lista(), query_user))
+    query_user = list(map(lambda x: x.listausuarios(), query_user))
     print(query_user)
     response_body = {
         #"msg": "Hello, this is your GET /user response ",

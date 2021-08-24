@@ -25,6 +25,8 @@ class StatusOrden(db.Model):
     # def mostrarstado(self):
     #     return{
     #         "status": self.status
+    #         "vehicle_id": self.vehicle_id,
+    #         "model": self.vehicle.model
     #     }
 
 class Contrato(db.Model):
@@ -75,7 +77,7 @@ class Contrato(db.Model):
         return{
             #"Status": self.mostrarestado()
             "id_project": self.id_project,
-            "fecha_registro": self.fecha_registro
+            "fecha_registro": self.fecha_registro,
         }
 
 class OrdenTrabajo(db.Model):
@@ -133,7 +135,7 @@ class User(db.Model):
     def __repr__(self):
         return '<User %r>' % self.id
 
-    def todosdatos(self):
+    def datosusuario(self):
         return {
             #"id": self.id,
             "email": self.email,
@@ -145,7 +147,7 @@ class User(db.Model):
             "fecha_nacimiento": self.fecha_nacimiento,
             "fecha_registro": self.fecha_registro
         }
-    def lista(self):
+    def listausuarios(self):
         return {
             #"id": self.id,
             "name": self.name,
