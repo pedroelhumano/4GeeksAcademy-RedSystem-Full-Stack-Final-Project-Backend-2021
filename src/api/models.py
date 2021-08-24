@@ -1,4 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
+#Importo para poder trabajar con fechas
+import datetime
 
 db = SQLAlchemy()
 
@@ -17,24 +19,64 @@ class StatusOrden(db.Model):
     id_userorden = db.Column(db.Integer, db.ForeignKey('userorden.id'))
     id_contrato = db.Column(db.Integer, db.ForeignKey('contrato.id'))
 
+    def __repr__(self):
+        return '<StatusOrden %r>' % self.id
+
+    # def mostrarstado(self):
+    #     return{
+    #         "status": self.status
+    #     }
+
 class Contrato(db.Model):
     __tablename__ = 'contrato'
     id = db.Column(db.Integer, primary_key=True)
-    id_project = db.Column(db.String(60), unique=True, nullable=False)
+    id_project = db.Column(db.String(255), unique=True, nullable=False)
     region = db.Column(db.String(100), unique=False, nullable=False)
     comuna = db.Column(db.String(100), unique=False, nullable=False)
     sector = db.Column(db.String(100), unique=False, nullable=False)
-    cerco_geo_latitud = db.Column(db.String(120), unique=False, nullable=False)
-    cerco_geo_longitud = db.Column(db.String(120), unique=False, nullable=False)
-    plano = db.Column(db.String(120), unique=False, nullable=False)
+    #cerco_geo_latitud = db.Column(db.String(120), unique=False, nullable=False)
+    #cerco_geo_longitud = db.Column(db.String(120), unique=False, nullable=False)
+    plano = db.Column(db.String(120), unique=False, nullable=True)
     obra_descripcion = db.Column(db.String(200), unique=False, nullable=False)
-    planta_matriz = db.Column(db.String(120), unique=False, nullable=False)
-    hp = db.Column(db.Integer, unique=False, nullable=False)
+    planta_matriz = db.Column(db.String(120), unique=False, nullable=True)
+    #hp = db.Column(db.Integer, unique=False, nullable=False)
     comentario = db.Column(db.String(120), unique=False, nullable=False)
-    prioridad = db.Column(db.String(120), unique=False, nullable=False)
+    fecha_registro = db.Column(db.DateTime, default = datetime.datetime.now)
+    #prioridad = db.Column(db.String(120), unique=False, nullable=False)
     #Relaciones
     statusOrden = db.relationship ('StatusOrden', backref="contrato", lazy=True)
     ordenTrabajo = db.relationship ('OrdenTrabajo', backref="contrato", lazy=True)
+    
+    def __repr__(self):
+        return '<Contrato %r>' % self.id
+
+    # def mostrarestado(self):
+    #     return{
+    #         "statusOrden": self.statusOrden
+    #     }
+
+    # def mostrarestado(self):
+    #     return list(map(lambda statusorden: statusorden.serialize(),self.statusorden))
+
+
+    def datoscontrato(self):
+        return{
+            "id_project": self.id_project,
+            "region": self.region,
+            "comuna": self.comuna,
+            "sector": self.id_project,
+            "plano": self.plano,
+            "obra_descripcion": self.obra_descripcion,
+            "planta_matriz": self.planta_matriz,
+            "fecha_registro": self.fecha_registro,
+            "comentario": self.comentario
+        }
+    def listacontratos(self):
+        return{
+            #"Status": self.mostrarestado()
+            "id_project": self.id_project,
+            "fecha_registro": self.fecha_registro
+        }
 
 class OrdenTrabajo(db.Model):
     __tablename__ = 'ordentrabajo'
@@ -78,22 +120,36 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(120), unique=False, nullable=False)
     password = db.Column(db.String(80), unique=False, nullable=False)
-    rut = db.Column(db.String(12), unique=False, nullable=False)
-    name = db.Column(db.String(100), unique=False, nullable=False)
-    lastname = db.Column(db.String(100), unique=False, nullable=False)
-    contact = db.Column(db.String(120), unique=False, nullable=False)
-    register = db.Column(db.String(120), unique=False, nullable=False)
-    perfil = db.Column(db.String(120), unique=False, nullable=False)
-    fecha_nacimiento = db.Column(db.String(200), unique=False, nullable=False)
+    rut = db.Column(db.String(12), unique=False, nullable=True)
+    name = db.Column(db.String(100), unique=False, nullable=True)
+    lastname = db.Column(db.String(100), unique=False, nullable=True)
+    contact = db.Column(db.String(120), unique=False, nullable=True)
+    perfil = db.Column(db.String(40), unique=False, nullable=False, default ="Tecnico")
+    fecha_nacimiento = db.Column(db.String(200), unique=False, nullable=True)
+    fecha_registro = db.Column(db.DateTime, default = datetime.datetime.now)
     #Relación
     userOrden = db.relationship ('UserOrden', backref="user", lazy=True)
 
-    #def __repr__(self):
-        #return '<User %r>' % self.username
+    def __repr__(self):
+        return '<User %r>' % self.id
 
-    #def serialize(self):
-        #return {
+    def todosdatos(self):
+        return {
             #"id": self.id,
-            #"email": self.email,
-            # do not serialize the password, its a security breach
-        #}
+            "email": self.email,
+            "rut": self.rut,
+            "name": self.name,
+            "lastname": self.lastname,
+            "contact": self.contact,
+            "perfil": self.perfil,
+            "fecha_nacimiento": self.fecha_nacimiento,
+            "fecha_registro": self.fecha_registro
+        }
+    def lista(self):
+        return {
+            #"id": self.id,
+            "name": self.name,
+            "lastname": self.lastname,
+            "rut": self.rut,
+            "perfil": self.perfil
+        }
