@@ -66,7 +66,7 @@ class Contrato(db.Model):
             "id_project": self.id_project,
             "region": self.region,
             "comuna": self.comuna,
-            "sector": self.id_project,
+            "sector": self.sector,
             "plano": self.plano,
             "obra_descripcion": self.obra_descripcion,
             "planta_matriz": self.planta_matriz,
