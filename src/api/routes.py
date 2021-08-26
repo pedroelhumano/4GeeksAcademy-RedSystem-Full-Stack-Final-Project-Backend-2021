@@ -1,3 +1,4 @@
+  
 """
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
@@ -25,9 +26,14 @@ def get_users():
     print(query_user)
     response_body = {
         #"msg": "Hello, this is your GET /user response ",
-        "Lista de usuarios": query_user
+        "Lista_de_usuarios": query_user
     }
     return jsonify(response_body), 200
+
+@api.route('/lista_users/<int:id>', methods=['GET'])
+def get_user(id = None):
+    query_user = User.query.filter_by(id=id).first()
+    return jsonify(query_user.datosusuario()), 200
 
 @api.route('/lista_contratos', methods=['GET'])
 def get_contratos():
@@ -35,6 +41,11 @@ def get_contratos():
     query_contratos = list(map(lambda x: x.listacontratos(), query_contratos))
     #print(query_user)
     response_body = {
-        "Lista de contratos": query_contratos
+        "Lista_de_contratos": query_contratos
     }
     return jsonify(response_body), 200
+
+@api.route('/lista_contratos/<int:id>', methods=['GET'])
+def get_contrato(id = None):
+    query_contratos = Contrato.query.filter_by(id=id).first()
+    return jsonify(query_contratos.datoscontrato()), 200

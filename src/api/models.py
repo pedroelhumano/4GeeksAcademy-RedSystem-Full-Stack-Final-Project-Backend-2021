@@ -32,7 +32,7 @@ class StatusOrden(db.Model):
 class Contrato(db.Model):
     __tablename__ = 'contrato'
     id = db.Column(db.Integer, primary_key=True)
-    id_project = db.Column(db.String(255), unique=True, nullable=False)
+    id_project = db.Column(db.String(255), unique=True, nullable=True)
     region = db.Column(db.String(100), unique=False, nullable=False)
     comuna = db.Column(db.String(100), unique=False, nullable=False)
     sector = db.Column(db.String(100), unique=False, nullable=False)
@@ -77,7 +77,7 @@ class Contrato(db.Model):
         return{
             #"Status": self.mostrarestado()
             "id_project": self.id_project,
-            "fecha_registro": self.fecha_registro,
+            #"fecha_registro": self.fecha_registro,
         }
 
 class OrdenTrabajo(db.Model):
@@ -120,13 +120,13 @@ class Acreditacion(db.Model):
 class User(db.Model):
     __tablename__ = 'user'
     id = db.Column(db.Integer, primary_key=True)
-    email = db.Column(db.String(120), unique=False, nullable=False)
-    password = db.Column(db.String(80), unique=False, nullable=False)
+    email = db.Column(db.String(120), unique=False, nullable=True)
+    password = db.Column(db.String(80), unique=False, nullable=True)
     rut = db.Column(db.String(12), unique=False, nullable=True)
     name = db.Column(db.String(100), unique=False, nullable=True)
     lastname = db.Column(db.String(100), unique=False, nullable=True)
     contact = db.Column(db.String(120), unique=False, nullable=True)
-    perfil = db.Column(db.String(40), unique=False, nullable=False, default ="Tecnico")
+    perfil = db.Column(db.String(40), unique=False, nullable=True, default ="Tecnico")
     fecha_nacimiento = db.Column(db.String(200), unique=False, nullable=True)
     fecha_registro = db.Column(db.DateTime, default = datetime.datetime.now)
     #Relación
@@ -149,9 +149,13 @@ class User(db.Model):
         }
     def listausuarios(self):
         return {
-            #"id": self.id,
+            "id": self.id,
             "name": self.name,
             "lastname": self.lastname,
             "rut": self.rut,
             "perfil": self.perfil
         }
+    
+    # @staticmethod
+    # def get_by_id(id):
+    #     return User.query.filter_by(id=id).first()
