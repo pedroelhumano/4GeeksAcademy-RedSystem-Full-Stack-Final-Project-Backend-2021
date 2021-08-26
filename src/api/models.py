@@ -152,6 +152,5 @@ class User(db.Model):
             "id": self.id,
             "name": self.name,
             "lastname": self.lastname,
-            "rut": self.rut,
             "perfil": self.perfil
         }
