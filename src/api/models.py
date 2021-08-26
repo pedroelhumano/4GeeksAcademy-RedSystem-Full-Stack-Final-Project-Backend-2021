@@ -32,17 +32,17 @@ class StatusOrden(db.Model):
 class Contrato(db.Model):
     __tablename__ = 'contrato'
     id = db.Column(db.Integer, primary_key=True)
-    id_project = db.Column(db.String(255), unique=True, nullable=True)
-    region = db.Column(db.String(100), unique=False, nullable=False)
-    comuna = db.Column(db.String(100), unique=False, nullable=False)
-    sector = db.Column(db.String(100), unique=False, nullable=False)
+    id_project = db.Column(db.String(255), unique=True, nullable=False)
+    region = db.Column(db.String(100), unique=False, nullable=True)
+    comuna = db.Column(db.String(100), unique=False, nullable=True)
+    sector = db.Column(db.String(100), unique=False, nullable=True)
     #cerco_geo_latitud = db.Column(db.String(120), unique=False, nullable=False)
     #cerco_geo_longitud = db.Column(db.String(120), unique=False, nullable=False)
     plano = db.Column(db.String(120), unique=False, nullable=True)
-    obra_descripcion = db.Column(db.String(200), unique=False, nullable=False)
+    obra_descripcion = db.Column(db.String(200), unique=False, nullable=True)
     planta_matriz = db.Column(db.String(120), unique=False, nullable=True)
     #hp = db.Column(db.Integer, unique=False, nullable=False)
-    comentario = db.Column(db.String(120), unique=False, nullable=False)
+    comentario = db.Column(db.String(120), unique=False, nullable=True)
     fecha_registro = db.Column(db.DateTime, default = datetime.datetime.now)
     #prioridad = db.Column(db.String(120), unique=False, nullable=False)
     #Relaciones
@@ -120,8 +120,8 @@ class Acreditacion(db.Model):
 class User(db.Model):
     __tablename__ = 'user'
     id = db.Column(db.Integer, primary_key=True)
-    email = db.Column(db.String(120), unique=False, nullable=True)
-    password = db.Column(db.String(80), unique=False, nullable=True)
+    email = db.Column(db.String(120), unique=False, nullable=False)
+    password = db.Column(db.String(255), unique=False, nullable=False)
     rut = db.Column(db.String(12), unique=False, nullable=True)
     name = db.Column(db.String(100), unique=False, nullable=True)
     lastname = db.Column(db.String(100), unique=False, nullable=True)
@@ -155,7 +155,3 @@ class User(db.Model):
             "rut": self.rut,
             "perfil": self.perfil
         }
-    
-    # @staticmethod
-    # def get_by_id(id):
-    #     return User.query.filter_by(id=id).first()
