@@ -85,6 +85,7 @@ class Contrato(db.Model):
 class OrdenTrabajo(db.Model):
     __tablename__ = 'ordentrabajo'
     id = db.Column(db.Integer, primary_key=True)
+    id_nombre = db.Column(db.String(100), unique=False, nullable=False)
     tipo = db.Column(db.String(100), unique=False, nullable=False)
     descripcion = db.Column(db.String(255), unique=False, nullable=False)
     #IdForaneo
@@ -92,6 +93,24 @@ class OrdenTrabajo(db.Model):
     #Relaciones
     detalleOrdenTrabajo = db.relationship ('DetalleOrdenTrabajo', backref="ordentrabajo", lazy=True)
     userOrden = db.relationship ('UserOrden', backref="ordentrabajo", lazy=True)
+
+    def repr(self):
+        return '<OrdenTrabajo %r>' % self.id
+
+    def datoscorden(self):
+        return{
+            "id": self.id,
+            #"Status": self.mostrarestado()
+            "id_nombre": self.id_nombre,
+            "tipo": self.tipo,
+            "descripcion": self.descripcion
+        }
+    def listaorden(self):
+        return{
+            "id": self.id,
+            #"Status": self.mostrarestado()
+            "id_nombre": self.id_nombre
+        }
 
 class DetalleOrdenTrabajo(db.Model):
     __tablename__ = 'detalleordentrabajo'
