@@ -88,12 +88,12 @@ class User(db.Model):
     #Relación
     userOrden = db.relationship ('UserOrden', backref="user", lazy=True)
 
-    #def __repr__(self):
-        #return '<User %r>' % self.username
+    def __repr__(self):
+        return '<User %r>' % self.email
 
-    #def serialize(self):
-        #return {
-            #"id": self.id,
-            #"email": self.email,
+    def serialize(self):
+        return {
+            "id": self.id,
+            "email": self.email,
             # do not serialize the password, its a security breach
-        #}
+        }
