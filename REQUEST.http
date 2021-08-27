@@ -1,0 +1,57 @@
+@host=https://3001-aquamarine-nightingale-gx602exf.ws-us16.gitpod.io/api
+
+### Probar la api regresa "message": "Hello! I'm a message that came from the backend"
+POST {{host}}/hello
+Content-Type: application/json
+
+### Creación de hash
+POST {{host}}/hash
+Content-Type: application/json
+
+
+### REGISTER
+POST {{host}}/register
+Content-Type: application/json
+
+{
+    "email":"holas@pedro.cl",
+    "password":"123456",
+    "rut":"blabla",
+    "name":"Pedro",
+    "lastname":"Yanez",
+    "contact":"blabla",
+    "register":"blabla",
+    "perfil":"administrador",
+    "fecha_nacimiento":"20-11-1995"
+}
+
+### USER
+GET {{host}}/users
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+###  @AUTH
+# @name authSession
+POST {{host}}/login
+Content-Type: application/json
+
+{
+    "email":"holas@pedro.cl",
+    "password":"123456"
+}
+
+###
+@token = {{authSession.response.body.$.token}}
+
+
+{
+    "email":"hola@luis.cl",
+    "password":"123456",
+    "rut":"blabla",
+    "name":"Luis",
+    "lastname":"Salgado",
+    "contact":"blabla",
+    "register":"blabla",
+    "perfil":"tecnico",
+    "fecha_nacimiento":"14-08-1992"
+}
