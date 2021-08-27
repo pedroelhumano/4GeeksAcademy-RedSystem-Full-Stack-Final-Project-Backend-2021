@@ -1,4 +1,4 @@
-@host=https://3001-aquamarine-nightingale-gx602exf.ws-us15.gitpod.io/api
+@host=https://3001-aquamarine-nightingale-gx602exf.ws-us16.gitpod.io/api
 
 ### Probar la api regresa "message": "Hello! I'm a message that came from the backend"
 POST {{host}}/hello
