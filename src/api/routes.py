@@ -5,8 +5,8 @@ from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import db, User #Y todo lo que se necesite
 from api.utils import generate_sitemap, APIException
 from werkzeug.security import generate_password_hash, check_password_hash       ## Nos permite manejar tokens por authentication (usuarios)    
-from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity   #from models import Person
-import datetime
+from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity   #El 2do es para crear el token y el 3ro para pedir siempre
+import datetime #Es propio de Python
 
 api = Blueprint('api', __name__)
 
@@ -37,7 +37,7 @@ def handle_hash():
     password=generate_password_hash(password, method='sha256')
 
     response_token = {
-        "users": "Manu",
+        "users": "Manu", #email
         "token": access_token,
         "password": password
     }
@@ -47,8 +47,8 @@ def handle_hash():
 @api.route('/register', methods=['POST'])
 def register():
  if request.method == 'POST':
-    email = request.json.get("email", None)
-    password = request.json.get("password", None)
+    email = request.json.get("email", None) #Lo validamos, si no existe (no lo mandan) lo definnimos "None"
+    password = request.json.get("password", None) 
     rut = request.json.get("rut", None)
     name = request.json.get("name", None)
     lastname = request.json.get("lastname", None)
@@ -59,7 +59,6 @@ def register():
     
     if not email:
         return "Email required", 401
-    password = request.json.get("password", None)
     if not password:
         return "Password required", 401
 
@@ -87,14 +86,60 @@ def register():
 
     response = {
         "msg": "Added successfully",
-        "pasword": hashed_password
+        "email": email
     }
-    return jsonify(response), 201
+    return jsonify(response), 201 #Devuelvo en texto plano
+
+    #return jsonify(response_body), 200
+
+@api.route('/users', methods=['POST', 'GET'])
+@jwt_required() #Para obligar al uso del token en el header
+def handle_users():
+    users = User.query.all()
+    users = list(map(lambda x: x.serialize(), users))
+    response_body = {
+        "users": users
+    }
 
     return jsonify(response_body), 200
 
-"""from werkzeug.security import check_password_hash
-check_password_hash('pbkdf2:sha1:1000$tYqN0VeL$2ee2568465fa30c1e6680196f8bb9eb0d2ca072d', 'foobar')
-True
-check_password_hash('pbkdf2:sha1:1000$XHj5nlLU$bb9a81bc54e7d6e11d9ab212cd143e768ea6225d', 'foobar')
-True """
+@api.route('/login', methods=['POST'])
+def login():
+    
+    email = request.json.get("email", None)
+    password = request.json.get("password", None)
+
+    if not email:
+        return jsonify({"msg":"Email required"}), 400
+
+    if not password:
+        return jsonify({"msg":"Password required"}), 400
+    
+    user = User.query.filter_by(email=email).first()
+    print(user)
+
+    if not user:
+        return jsonify({"msg": "The email is not correct",
+        "status": 401
+        
+        }), 401
+
+    # password=generate_password_hash(password, method='sha256')
+
+    if not check_password_hash(user.password, password):
+         return jsonify({"msg": "The password is not correct",
+        "status": 401
+        }), 400
+
+    expiracion = datetime.timedelta(days=1)
+    access_token = create_access_token(identity=user.email, expires_delta=expiracion)
+
+    data = {
+        "user": user.serialize(),
+        "token": access_token, #Lo normal es que solamente se regrese el token
+        "expires": expiracion.total_seconds()*1000,
+        "email": email
+    }
+
+
+    return jsonify(data), 200

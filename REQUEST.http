@@ -1,4 +1,4 @@
-@host=https://3001-fuchsia-crane-uckc5dw9.ws-us15.gitpod.io/api
+@host=https://3001-aquamarine-nightingale-gx602exf.ws-us15.gitpod.io/api
 
 ### Probar la api regresa "message": "Hello! I'm a message that came from the backend"
 POST {{host}}/hello
@@ -25,8 +25,10 @@ Content-Type: application/json
     "fecha_nacimiento":"20-11-1995"
 }
 
-
-### Debajo de aquí no se ha probado nada
+### USER
+GET {{host}}/users
+Content-Type: application/json
+Authorization: Bearer {{token}}
 
 ###  @AUTH
 # @name authSession
@@ -34,19 +36,13 @@ POST {{host}}/login
 Content-Type: application/json
 
 {
-    "email":"hola@ortega.cl",
-    "password":"87654321"
+    "email":"holas@pedro.cl",
+    "password":"123456"
 }
 
 ###
 @token = {{authSession.response.body.$.token}}
 
-
-
-### USER
-GET {{host}}/users
-Content-Type: application/json
-Authorization: Bearer {{token}}
 
 {
     "email":"hola@luis.cl",
