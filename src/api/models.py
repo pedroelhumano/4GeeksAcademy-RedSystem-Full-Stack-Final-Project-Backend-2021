@@ -63,10 +63,11 @@ class Contrato(db.Model):
 
     def datoscontrato(self):
         return{
+            "id": self.id,
             "id_project": self.id_project,
             "region": self.region,
             "comuna": self.comuna,
-            "sector": self.id_project,
+            "sector": self.sector,
             "plano": self.plano,
             "obra_descripcion": self.obra_descripcion,
             "planta_matriz": self.planta_matriz,
@@ -75,6 +76,7 @@ class Contrato(db.Model):
         }
     def listacontratos(self):
         return{
+            "id": self.id,
             #"Status": self.mostrarestado()
             "id_project": self.id_project,
             #"fecha_registro": self.fecha_registro,
