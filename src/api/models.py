@@ -60,7 +60,6 @@ class Contrato(db.Model):
     # def mostrarestado(self):
     #     return list(map(lambda statusorden: statusorden.serialize(),self.statusorden))
 
-
     def datoscontrato(self):
         return{
             "id": self.id,
@@ -129,6 +128,13 @@ class UserOrden(db.Model):
     #Relación
     acreditacion = db.relationship ('Acreditacion', backref="userorden", lazy=True)
     statusOrden = db.relationship ('StatusOrden', backref="userorden", lazy=True)
+
+    def listaUserOrden(self):
+        return {
+            "id": self.id,
+            "id_user": self.id_user,
+            "id_orden": self.id_orden
+        }
 
 class Acreditacion(db.Model):
     __tablename__ = 'acreditacion'

@@ -1,4 +1,4 @@
-@host=https://3001-aquamarine-nightingale-gx602exf.ws-us16.gitpod.io/api
+@host=https://3001-plum-marmoset-ynjeah93.ws-us16.gitpod.io/api
 
 ### Probar la api regresa "message": "Hello! I'm a message that came from the backend"
 POST {{host}}/hello
@@ -8,13 +8,17 @@ Content-Type: application/json
 POST {{host}}/hash
 Content-Type: application/json
 
+### DATOS DE UN USER
+GET {{host}}/user/2
+Content-Type: application/json
+#Authorization: Bearer {{token}}
 
 ### REGISTER
-POST {{host}}/register
+POST {{host}}/user
 Content-Type: application/json
 
 {
-    "email":"holas@pedro.cl",
+    "email":"hol4as@ped4ro.cl",
     "password":"123456",
     "rut":"blabla",
     "name":"Pedro",
@@ -25,7 +29,25 @@ Content-Type: application/json
     "fecha_nacimiento":"20-11-1995"
 }
 
-### USER
+### UPDATE USER
+PUT {{host}}/user/3
+Content-Type: application/json
+
+{
+    "rut":"vlevle",
+    "name":"Laja",
+    "lastname":"Salgado",
+    "contact":"vlevle",
+    "register":"vlevle",
+    "perfil":"super mega administrador",
+    "fecha_nacimiento":"31-01-1997"
+}
+
+### DELETE USER
+DELETE  {{host}}/user/3
+Content-Type: application/json
+
+### USERS
 GET {{host}}/users
 Content-Type: application/json
 Authorization: Bearer {{token}}
@@ -42,6 +64,60 @@ Content-Type: application/json
 
 ###
 @token = {{authSession.response.body.$.token}}
+
+
+
+
+### CONTRATOS DE UN USER
+GET {{host}}/contratos_user/1
+Content-Type: application/json
+#Authorization: Bearer {{token}}
+
+
+
+
+
+
+
+### LISTA DE TODOS LOS CONTRATOS
+GET {{host}}/lista_contratos
+Content-Type: application/json
+#Authorization: Bearer {{token}}
+
+### DATOS DE UN CONTRATO EN ESPECIFICO
+GET {{host}}/lista_contratos/1
+Content-Type: application/json
+#Authorization: Bearer {{token}}
+
+### LISTA DE ORDENES DE TRABAJO DE UN CONTRATO
+GET {{host}}/order_trabajo/1
+Content-Type: application/json
+#Authorization: Bearer {{token}}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 {
