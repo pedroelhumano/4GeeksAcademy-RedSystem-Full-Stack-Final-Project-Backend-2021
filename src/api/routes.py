@@ -8,7 +8,6 @@ from api.utils import generate_sitemap, APIException
 from werkzeug.security import generate_password_hash, check_password_hash       ## Nos permite manejar tokens por authentication (usuarios)    
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity   #El 2do es para crear el token y el 3ro para pedir siempre
 import datetime #Es propio de Python
-from sqlalchemy.orm import sessionmaker
 
 
 api = Blueprint('api', __name__)
@@ -157,7 +156,7 @@ def delete_user(id = None):
 
 #Para listar todos los usuarios de la Base de Datos
 @api.route('/users', methods=['POST', 'GET'])
-@jwt_required() #Para obligar al uso del token en el header
+#@jwt_required() #Para obligar al uso del token en el header
 def handle_users():
     users = User.query.all()
     users = list(map(lambda x: x.listausuarios(), users))
@@ -202,10 +201,11 @@ def login():
     access_token = create_access_token(identity=user.email, expires_delta=expiracion)
 
     data = {
-        "user": user.datosusuario(),
+        "id": user.id,
+        "email": user.email,
+        "perfil": user.perfil,
         "token": access_token, #Lo normal es que solamente se regrese el token
         "expires": expiracion.total_seconds()*1000,
-        "id": user.id
     }
 
 
@@ -241,43 +241,36 @@ def get_order_trabajo_by_contrato(id_contrato = None):
 
 
 
-
-
-
-
-
-
 #Ruta para la lista de contratos de un usuario
 @api.route('/contratos_user/<int:id>', methods=['GET'])
 def get_contratos_user(id = None):
     query_contratos_user = UserOrden.query.filter_by(id_user=id)
     query_contratos_user = list(map(lambda x: x.listaUserOrden(), query_contratos_user))
+    
+    """ listaNueva = []
+    for x in query_contratos_user:
+        listaNueva.append(x['id_orden'])
+    
+    listaOrdenes = []
+    for x in listaNueva:
+        listaOrdenes = OrdenTrabajo.query.get(x) """
 
-    Session = sessionmaker()
-    session = Session()
-    userOrden = UserOrden()
-    ordenTrabajo = OrdenTrabajo()
-    Contrato = Contrato()
-
-    contratosUser = session.query(
-         userOrden, OrdenTrabajo, Contrato,
-    ).filter(
-         Contrato.id == ordenTrabajo.id_contrato,
-    ).filter(
-         ordenTrabajo.id == userOrden.id_orden,
-    ).filter(
-        userOrden.id_user == id,
-    ).all()
+    """ listaOrdenes = []
+    listaAux = []
+    for x in listaNueva:
+        if x not in listaAux:
+            listaOrdenes.append(OrdenTrabajo.query.get(x))
+        listaAux.append(x) """
     
     response_body = {
-        "Lista_de_contratos": contratosUser
+        "Contratos": query_contratos_user
     }
     return jsonify(response_body), 200
 
 #Lista para una orden de trabajo en especifica y sus datos, hay que revisar el conflicto
-#@api.route('/order/<int:id>', methods=['GET'])
-#def get_order_trabajo(id = None):
-    #query_order_trabajo = OrdenTrabajo.query.filter_by(id = id).first()
-    #return jsonify(query_order_trabajo.datoscorden()), 200
+@api.route('/order/<int:id>', methods=['GET'])
+def get_order_trabajo(id = None):
+    query_order_trabajo = OrdenTrabajo.query.filter_by(id = id).first()
+    return jsonify(query_order_trabajo.datoscorden()), 200
 
 

@@ -23,3 +23,7 @@ tasks:
         npm install &&
         python docs/assets/greeting.py front
       openMode: split-right
+
+vscode:
+  extensions:
+    - cweijan.vscode-database-client2
