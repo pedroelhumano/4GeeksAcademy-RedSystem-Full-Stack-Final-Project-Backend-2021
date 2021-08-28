@@ -86,6 +86,7 @@ class OrdenTrabajo(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     id_nombre = db.Column(db.String(100), unique=False, nullable=False)
     tipo = db.Column(db.String(100), unique=False, nullable=False)
+    #direccion = db.Column(db.String(255), unique=False, nullable=False)
     descripcion = db.Column(db.String(255), unique=False, nullable=False)
     #IdForaneo
     id_contrato = db.Column(db.Integer, db.ForeignKey('contrato.id'))
@@ -102,7 +103,8 @@ class OrdenTrabajo(db.Model):
             #"Status": self.mostrarestado()
             "id_nombre": self.id_nombre,
             "tipo": self.tipo,
-            "descripcion": self.descripcion
+            "descripcion": self.descripcion,
+            #"direccion": self.descripcion
         }
     def listaorden(self):
         return{
@@ -131,8 +133,6 @@ class UserOrden(db.Model):
 
     def listaUserOrden(self):
         return {
-            "id": self.id,
-            "id_user": self.id_user,
             "id_orden": self.id_orden
         }
 

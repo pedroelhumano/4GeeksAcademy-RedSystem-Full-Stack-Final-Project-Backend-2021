@@ -9,7 +9,7 @@ POST {{host}}/hash
 Content-Type: application/json
 
 ### DATOS DE UN USER
-GET {{host}}/user/2
+GET {{host}}/user/1
 Content-Type: application/json
 #Authorization: Bearer {{token}}
 
@@ -18,14 +18,14 @@ POST {{host}}/user
 Content-Type: application/json
 
 {
-    "email":"hol4as@ped4ro.cl",
+    "email":"Fabidiaz@4geeks.cl",
     "password":"123456",
     "rut":"blabla",
-    "name":"Pedro",
-    "lastname":"Yanez",
+    "name":"Fabiola",
+    "lastname":"Diaz",
     "contact":"blabla",
     "register":"blabla",
-    "perfil":"administrador",
+    "perfil":"tecnico",
     "fecha_nacimiento":"20-11-1995"
 }
 
