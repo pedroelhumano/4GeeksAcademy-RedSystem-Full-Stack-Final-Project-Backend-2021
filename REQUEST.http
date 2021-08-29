@@ -8,17 +8,19 @@ Content-Type: application/json
 POST {{host}}/hash
 Content-Type: application/json
 
+############################################################################################################
+
 ### DATOS DE UN USER
 GET {{host}}/user/1
 Content-Type: application/json
 #Authorization: Bearer {{token}}
 
-### REGISTER
+### REGISTER/POST DE UN USER
 POST {{host}}/user
 Content-Type: application/json
 
 {
-    "email":"Fabiz@4geeks.cl",
+    "email":"Fab5iz@4geeks.cl",
     "password":"123456",
     "rut":"blabla",
     "name":"Placido",
@@ -43,13 +45,15 @@ Content-Type: application/json
 }
 
 ### DELETE USER
-DELETE  {{host}}/user/7
+DELETE  {{host}}/user/2
 Content-Type: application/json
 
 ### USERS
 GET {{host}}/users
 Content-Type: application/json
 Authorization: Bearer {{token}}
+
+############################################################################################################
 
 ###  @AUTH
 # @name authSession
@@ -64,75 +68,17 @@ Content-Type: application/json
 ###
 @token = {{authSession.response.body.$.token}}
 
+############################################################################################################
 
-
-
-### CONTRATOS DE UN USER
-GET {{host}}/contratos_user/1
+### VER TODOS LOS CONTRATOS
+GET {{host}}/contratos
 Content-Type: application/json
 #Authorization: Bearer {{token}}
 
-
-### UPDATE ORDEN
-PUT {{host}}/order/1
-Content-Type: application/json
-
-{
-    "id_nombre":"vlevle",
-    "tipo":"Laja",
-    "direccion":"vlevle",
-    "descripcion":"vlevle"
-}
-
-### UPDATE CONTRATO
-PUT {{host}}/lista_contratos/1
-Content-Type: application/json
-
-{
-    "id_project":"vlevle",
-    "region":"vlevle",
-    "comuna":"vlevle",
-    "sector":"vlevle",
-    "plano":"vlevle",
-    "obra_descripcion":"vlevle",
-    "planta_matriz":"vlevle",
-    "comentario":"vlevle"
-}
-
-
-
-### LISTA DE TODOS LOS CONTRATOS
-GET {{host}}/lista_contratos
+### VER UN CONTRATO EN ESPECIFICO
+GET {{host}}/contrato/1
 Content-Type: application/json
 #Authorization: Bearer {{token}}
-
-### DATOS DE UN CONTRATO EN ESPECIFICO
-GET {{host}}/lista_contratos/1
-Content-Type: application/json
-#Authorization: Bearer {{token}}
-
-### LISTA DE ORDENES DE TRABAJO DE UN CONTRATO
-GET {{host}}/order_trabajo/1
-Content-Type: application/json
-#Authorization: Bearer {{token}}
-
-### DELETE ORDEN DE TRABAJO
-DELETE  {{host}}/order/2
-Content-Type: application/json
-
-### CREAR ORDEN DE TRABAJO
-POST {{host}}/order
-Content-Type: application/json
-
-{
-    "id_contrato":2,
-    "id_nombre":"Mufa56",
-    "tipo":"blabla",
-    "direccion":"Casa",
-    "descripcion":"Casita"
-}
-
-############################
 
 ### CREAR CONTRATO
 POST {{host}}/contrato
@@ -149,28 +95,76 @@ Content-Type: application/json
     "comentario":"Este es un buen proyecto"
 }
 
-### DELETE CONTRATO
-DELETE  {{host}}/contrato/3
+### UPDATE CONTRATO
+PUT {{host}}/contrato/1
 Content-Type: application/json
 
+{
+    "id_project":"vlevle",
+    "region":"vlevle",
+    "comuna":"vlevle",
+    "sector":"vlevle",
+    "plano":"vlevle",
+    "obra_descripcion":"vlevle",
+    "planta_matriz":"vlevle",
+    "comentario":"vlevle"
+}
+
+### DELETE CONTRATO
+DELETE  {{host}}/contrato/2
+Content-Type: application/json
+
+############################################################################################################
+
+### VER TODAS LAS ORDENES DE TRABAJO DE UN CONTRATO
+GET {{host}}/orders/1
+Content-Type: application/json
+#Authorization: Bearer {{token}}
+
+### VER DATOS DE UNA ORDEN DE TRABAJO
+GET {{host}}/order/1
+Content-Type: application/json
+#Authorization: Bearer {{token}}
+
+### CREAR UNA ORDEN DE TRABAJO
+POST {{host}}/order
+Content-Type: application/json
+
+{
+    "id_contrato":1,
+    "id_nombre":"Mufa56",
+    "tipo":"blabla",
+    "direccion":"Casa",
+    "descripcion":"Casita"
+}
+
+### UPDATE UNA ORDEN DE TRABAJO
+PUT {{host}}/order/2
+Content-Type: application/json
+
+{
+    "id_nombre":"vlevle",
+    "tipo":"Laja",
+    "direccion":"vlevle",
+    "descripcion":"vlevle"
+}
+
+### DELETE ORDEN DE TRABAJO
+DELETE  {{host}}/order/3
+Content-Type: application/json
+
+############################################################################################################
 
 
 
+############################################################################################################
 
+### VER CONTRATOS DE UN USER ----> NO FUNCIONA
+GET {{host}}/contratos_user/1
+Content-Type: application/json
+#Authorization: Bearer {{token}}
 
-
-
-##########################
-
-
-
-
-
-
-
-
-
-
+############################################################################################################
 
 
 {

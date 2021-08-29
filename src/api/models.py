@@ -9,7 +9,7 @@ class StatusOrden(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     inicio_fecha = db.Column(db.String(100), unique=False, nullable=False)
     final_fecha = db.Column(db.String(100), unique=False, nullable=True)
-    status = db.Column(db.String(120), unique=False, nullable=False)
+    status = db.Column(db.String(120), unique=False, nullable=False, default="Pendiente")
     minutostrabajados = db.Column(db.String(120), unique=False, nullable=False) #tiempo que se tardo en hacer una aplicacion
     url_foto_epp = db.Column(db.String(120), unique=False, nullable=False)
     url_foto_referencia = db.Column(db.String(200), unique=False, nullable=False)
@@ -153,7 +153,7 @@ class User(db.Model):
     name = db.Column(db.String(100), unique=False, nullable=True)
     lastname = db.Column(db.String(100), unique=False, nullable=True)
     contact = db.Column(db.String(120), unique=False, nullable=True)
-    perfil = db.Column(db.String(40), unique=False, nullable=True, default ="Tecnico")
+    perfil = db.Column(db.String(40), unique=False, nullable=True, default ="Admin")
     fecha_nacimiento = db.Column(db.String(200), unique=False, nullable=True)
     fecha_registro = db.Column(db.DateTime, default = datetime.datetime.now)
     #Relación
