@@ -18,11 +18,11 @@ POST {{host}}/user
 Content-Type: application/json
 
 {
-    "email":"Fabidiaz@4geeks.cl",
+    "email":"Fabiz@4geeks.cl",
     "password":"123456",
     "rut":"blabla",
-    "name":"Fabiola",
-    "lastname":"Diaz",
+    "name":"Placido",
+    "lastname":"Perez",
     "contact":"blabla",
     "register":"blabla",
     "perfil":"tecnico",
@@ -30,13 +30,12 @@ Content-Type: application/json
 }
 
 ### UPDATE USER
-PUT {{host}}/user/3
+PUT {{host}}/user/1
 Content-Type: application/json
 
 {
     "rut":"vlevle",
     "name":"Laja",
-    "lastname":"Salgado",
     "contact":"vlevle",
     "register":"vlevle",
     "perfil":"super mega administrador",
@@ -44,7 +43,7 @@ Content-Type: application/json
 }
 
 ### DELETE USER
-DELETE  {{host}}/user/3
+DELETE  {{host}}/user/7
 Content-Type: application/json
 
 ### USERS
@@ -74,7 +73,16 @@ Content-Type: application/json
 #Authorization: Bearer {{token}}
 
 
+### UPDATE ORDEN
+PUT {{host}}/order/1
+Content-Type: application/json
 
+{
+    "id_nombre":"vlevle",
+    "tipo":"Laja",
+    "direccion":"vlevle",
+    "descripcion":"vlevle"
+}
 
 
 
