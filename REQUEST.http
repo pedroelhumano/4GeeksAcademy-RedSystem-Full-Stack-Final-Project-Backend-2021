@@ -84,6 +84,20 @@ Content-Type: application/json
     "descripcion":"vlevle"
 }
 
+### UPDATE CONTRATO
+PUT {{host}}/lista_contratos/1
+Content-Type: application/json
+
+{
+    "id_project":"vlevle",
+    "region":"vlevle",
+    "comuna":"vlevle",
+    "sector":"vlevle",
+    "plano":"vlevle",
+    "obra_descripcion":"vlevle",
+    "planta_matriz":"vlevle",
+    "comentario":"vlevle"
+}
 
 
 
