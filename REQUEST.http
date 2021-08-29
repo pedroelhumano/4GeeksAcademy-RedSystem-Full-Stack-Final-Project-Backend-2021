@@ -1,4 +1,4 @@
-@host=https://3001-plum-marmoset-ynjeah93.ws-us16.gitpod.io/api
+@host=https://3001-peach-llama-swhgecmo.ws-us16.gitpod.io/api
 
 ### Probar la api regresa "message": "Hello! I'm a message that came from the backend"
 POST {{host}}/hello
@@ -116,6 +116,21 @@ GET {{host}}/order_trabajo/1
 Content-Type: application/json
 #Authorization: Bearer {{token}}
 
+### DELETE ORDEN DE TRABAJO
+DELETE  {{host}}/order/1
+Content-Type: application/json
+
+### CREAR ORDEN DE TRABAJO
+POST {{host}}/order/1
+Content-Type: application/json
+
+{
+    "id_contrato":2,
+    "id_nombre":"Mufa56",
+    "tipo":"blabla",
+    "direccion":"Casa",
+    "descripcion":"Casita"
+}
 
 
 
@@ -126,10 +141,7 @@ Content-Type: application/json
 
 
 
-
-
-
-
+##########################
 
 
 
