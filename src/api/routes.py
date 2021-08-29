@@ -239,7 +239,32 @@ def get_order_trabajo_by_contrato(id_contrato = None):
 
     return jsonify(response_body), 200
 
+#API para modificar una orden de trabajo en especifico
+@api.route('/order/<int:id>', methods=['PUT'])
+def put_order_trabajo(id = None):
+ if request.method == 'PUT':
+    id_nombre = request.json.get("id_nombre", None)
+    tipo = request.json.get("tipo", None)
+    direccion = request.json.get("direccion", None)
+    descripcion = request.json.get("descripcion", None)
+    
+    ordentrabajo = OrdenTrabajo.query.get(id)
+    if id_nombre:
+        ordentrabajo.id_nombre = id_nombre
+    if tipo:
+        ordentrabajo.tipo = tipo
+    if direccion:
+        ordentrabajo.direccion = direccion
+    if descripcion:
+        ordentrabajo.descripcion = descripcion
+    #db.session.add(user)
+    db.session.commit()
 
+    response = {
+        "msg": "Changes successfully",
+        "name": id_nombre
+    }
+    return jsonify(response), 201 #Devuelvo en texto plano
 
 #Ruta para la lista de contratos de un usuario
 @api.route('/contratos_user/<int:id>', methods=['GET'])
