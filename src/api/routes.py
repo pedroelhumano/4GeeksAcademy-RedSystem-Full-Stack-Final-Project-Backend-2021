@@ -311,8 +311,8 @@ def put_contrato(id = None):
 ##########################################
 
 #Para crear una orden de trabajo de un contrato
-@api.route('/order/<int:id>', methods=['POST'])
-def post_order_trabajo(id = None):
+@api.route('/order', methods=['POST'])
+def post_order_trabajo():
  if request.method == 'POST':
     id_contrato = request.json.get("id_contrato", None)
     id_nombre = request.json.get("id_nombre", None)
@@ -322,7 +322,7 @@ def post_order_trabajo(id = None):
     
     if not id_contrato:
         return "Contrato required", 401
-    contrato_query = Contrato.query.get(id)
+    contrato_query = Contrato.query.get(id_contrato)
     if not contrato_query:
         return "No existe ese contrato", 401
 
