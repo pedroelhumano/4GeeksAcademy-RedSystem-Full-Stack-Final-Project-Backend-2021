@@ -239,32 +239,7 @@ def get_order_trabajo_by_contrato(id_contrato = None):
 
     return jsonify(response_body), 200
 
-#API para modificar una orden de trabajo en especifico
-@api.route('/order/<int:id>', methods=['PUT'])
-def put_order_trabajo(id = None):
- if request.method == 'PUT':
-    id_nombre = request.json.get("id_nombre", None)
-    tipo = request.json.get("tipo", None)
-    direccion = request.json.get("direccion", None)
-    descripcion = request.json.get("descripcion", None)
-    
-    ordentrabajo = OrdenTrabajo.query.get(id)
-    if id_nombre:
-        ordentrabajo.id_nombre = id_nombre
-    if tipo:
-        ordentrabajo.tipo = tipo
-    if direccion:
-        ordentrabajo.direccion = direccion
-    if descripcion:
-        ordentrabajo.descripcion = descripcion
-    #db.session.add(user)
-    db.session.commit()
 
-    response = {
-        "msg": "Changes successfully",
-        "name": id_nombre
-    }
-    return jsonify(response), 201 #Devuelvo en texto plano
 
 #Ruta para la lista de contratos de un usuario
 @api.route('/contratos_user/<int:id>', methods=['GET'])
@@ -291,13 +266,6 @@ def get_contratos_user(id = None):
         "Contratos": query_contratos_user
     }
     return jsonify(response_body), 200
-
-#Lista para una orden de trabajo en especifica y sus datos, hay que revisar el conflicto
-@api.route('/order/<int:id>', methods=['GET'])
-def get_order_trabajo(id = None):
-    query_order_trabajo = OrdenTrabajo.query.filter_by(id = id).first()
-    return jsonify(query_order_trabajo.datoscorden()), 200
-
 
 #API para modificar un contrato en especifico
 @api.route('/lista_contratos/<int:id>', methods=['PUT'])
@@ -335,5 +303,89 @@ def put_contrato(id = None):
     response = {
         "msg": "Changes successfully",
         "name": id_project
+    }
+    return jsonify(response), 201 #Devuelvo en texto plano
+
+
+
+##########################################
+
+#Para crear una orden de trabajo de un contrato
+@api.route('/order/<int:id>', methods=['POST'])
+def post_order_trabajo(id = None):
+ if request.method == 'POST':
+    id_contrato = request.json.get("id_contrato", None)
+    id_nombre = request.json.get("id_nombre", None)
+    tipo = request.json.get("tipo", None)
+    direccion = request.json.get("direccion", None)
+    descripcion = request.json.get("descripcion", None)
+    
+    if not id_contrato:
+        return "Contrato required", 401
+    contrato_query = Contrato.query.get(id)
+    if not contrato_query:
+        return "No existe ese contrato", 401
+
+    orden = OrdenTrabajo()
+    orden.id_contrato = id_contrato
+    orden.id_nombre = id_nombre
+    orden.tipo = tipo
+    orden.direccion = direccion
+    orden.descripcion = descripcion
+
+    db.session.add(orden)
+    db.session.commit()
+
+    response = {
+        "msg": "Added successfully",
+        "name": id_nombre
+    }
+    return jsonify(response), 201 #Devuelvo en texto plano
+
+#Para modificar una orden de trabajo en especifico
+@api.route('/order/<int:id>', methods=['PUT'])
+def put_order_trabajo(id = None):
+ if request.method == 'PUT':
+    id_nombre = request.json.get("id_nombre", None)
+    tipo = request.json.get("tipo", None)
+    direccion = request.json.get("direccion", None)
+    descripcion = request.json.get("descripcion", None)
+    
+    ordentrabajo = OrdenTrabajo.query.get(id)
+    if id_nombre:
+        ordentrabajo.id_nombre = id_nombre
+    if tipo:
+        ordentrabajo.tipo = tipo
+    if direccion:
+        ordentrabajo.direccion = direccion
+    if descripcion:
+        ordentrabajo.descripcion = descripcion
+    #db.session.add(user)
+    db.session.commit()
+
+    response = {
+        "msg": "Changes successfully",
+        "name": id_nombre
+    }
+    return jsonify(response), 201 #Devuelvo en texto plano
+
+#Para mostrar una orden de trabajo en especifico y sus datos, hay que revisar el conflicto
+@api.route('/order/<int:id>', methods=['GET'])
+def get_order_trabajo(id = None):
+    query_order_trabajo = OrdenTrabajo.query.filter_by(id = id).first()
+    return jsonify(query_order_trabajo.datoscorden()), 200
+
+#Para eliminar una orden de trabajo
+@api.route('/order/<int:id>', methods=['DELETE'])
+def delete_orden(id = None):
+ if request.method == 'DELETE':
+    order = OrdenTrabajo.query.get(id)
+    
+    db.session.delete(order)
+    db.session.commit()
+
+    response = {
+        "msg": "Delete successfully",
+        "name": order.id_nombre
     }
     return jsonify(response), 201 #Devuelvo en texto plano
