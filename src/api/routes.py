@@ -308,7 +308,7 @@ def put_contrato(id = None):
 
 
 
-##########################################
+########################################################################
 
 #Para crear una orden de trabajo de un contrato
 @api.route('/order', methods=['POST'])
@@ -389,3 +389,30 @@ def delete_orden(id = None):
         "name": order.id_nombre
     }
     return jsonify(response), 201 #Devuelvo en texto plano
+
+######################################################################
+
+#Para eliminar un contrato
+@api.route('/contrato/<int:id>', methods=['DELETE'])
+def delete_contrato(id = None):
+ if request.method == 'DELETE':
+    contrato = Contrato.query.get(id)
+    """ orden = OrdenTrabajo.query.filter_by(id_contrato = id)
+    
+    while orden:
+        db.session.delete(orden)
+        orden = OrdenTrabajo.query.filter_by(id_contrato = id) """
+
+    db.session.delete(contrato)
+    db.session.commit()
+
+    response = {
+        "msg": "Delete successfully",
+        "name": contrato.id_project
+    }
+    return jsonify(response), 201 #Devuelvo en texto plano
+
+
+
+
+
