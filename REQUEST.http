@@ -117,11 +117,11 @@ Content-Type: application/json
 #Authorization: Bearer {{token}}
 
 ### DELETE ORDEN DE TRABAJO
-DELETE  {{host}}/order/1
+DELETE  {{host}}/order/2
 Content-Type: application/json
 
 ### CREAR ORDEN DE TRABAJO
-POST {{host}}/order/1
+POST {{host}}/order
 Content-Type: application/json
 
 {
