@@ -60,7 +60,6 @@ class Contrato(db.Model):
     # def mostrarestado(self):
     #     return list(map(lambda statusorden: statusorden.serialize(),self.statusorden))
 
-
     def datoscontrato(self):
         return{
             "id": self.id,
@@ -87,6 +86,7 @@ class OrdenTrabajo(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     id_nombre = db.Column(db.String(100), unique=False, nullable=False)
     tipo = db.Column(db.String(100), unique=False, nullable=False)
+    direccion = db.Column(db.String(255), unique=False, nullable=False)
     descripcion = db.Column(db.String(255), unique=False, nullable=False)
     #IdForaneo
     id_contrato = db.Column(db.Integer, db.ForeignKey('contrato.id'))
@@ -103,7 +103,8 @@ class OrdenTrabajo(db.Model):
             #"Status": self.mostrarestado()
             "id_nombre": self.id_nombre,
             "tipo": self.tipo,
-            "descripcion": self.descripcion
+            "descripcion": self.descripcion,
+            "direccion": self.descripcion
         }
     def listaorden(self):
         return{
@@ -129,6 +130,11 @@ class UserOrden(db.Model):
     #Relación
     acreditacion = db.relationship ('Acreditacion', backref="userorden", lazy=True)
     statusOrden = db.relationship ('StatusOrden', backref="userorden", lazy=True)
+
+    def listaUserOrden(self):
+        return {
+            "id_orden": self.id_orden
+        }
 
 class Acreditacion(db.Model):
     __tablename__ = 'acreditacion'
