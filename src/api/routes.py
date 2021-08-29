@@ -299,3 +299,41 @@ def get_order_trabajo(id = None):
     return jsonify(query_order_trabajo.datoscorden()), 200
 
 
+#API para modificar un contrato en especifico
+@api.route('/lista_contratos/<int:id>', methods=['PUT'])
+def put_contrato(id = None):
+ if request.method == 'PUT':
+    id_project = request.json.get("id_project", None)
+    region = request.json.get("region", None)
+    comuna = request.json.get("comuna", None)
+    sector = request.json.get("sector", None)
+    plano = request.json.get("plano", None)
+    obra_descripcion = request.json.get("obra_descripcion", None)
+    planta_matriz = request.json.get("planta_matriz", None)
+    comentario = request.json.get("comentario", None)
+
+    ordentrabajo = Contrato.query.get(id)
+    if id_project:
+        ordentrabajo.id_project = id_project
+    if region:
+        ordentrabajo.region = region
+    if comuna:
+        ordentrabajo.comuna = comuna
+    if sector:
+        ordentrabajo.sector = sector
+    if plano:
+        ordentrabajo.plano = plano
+    if obra_descripcion:
+        ordentrabajo.obra_descripcion = obra_descripcion
+    if planta_matriz:
+        ordentrabajo.planta_matriz = planta_matriz
+    if comentario:
+        ordentrabajo.comentario = comentario
+    #db.session.add(user)
+    db.session.commit()
+
+    response = {
+        "msg": "Changes successfully",
+        "name": id_project
+    }
+    return jsonify(response), 201 #Devuelvo en texto plano
