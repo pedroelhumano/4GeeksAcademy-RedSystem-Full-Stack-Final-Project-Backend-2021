@@ -132,7 +132,11 @@ Content-Type: application/json
     "descripcion":"Casita"
 }
 
+############################
 
+### DELETE CONTRATO
+DELETE  {{host}}/contrato/3
+Content-Type: application/json
 
 
 
