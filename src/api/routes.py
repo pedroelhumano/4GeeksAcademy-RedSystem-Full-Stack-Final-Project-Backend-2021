@@ -412,7 +412,40 @@ def delete_contrato(id = None):
     }
     return jsonify(response), 201 #Devuelvo en texto plano
 
+#Para crear un contrato
+@api.route('/contrato', methods=['POST'])
+def post_contrato():
+ if request.method == 'POST':
+    id_project = request.json.get("id_project", None)
+    region = request.json.get("region", None)
+    comuna = request.json.get("comuna", None)
+    sector = request.json.get("sector", None)
+    plano = request.json.get("plano", None)
+    obra_descripcion = request.json.get("obra_descripcion", None)
+    planta_matriz = request.json.get("planta_matriz", None)
+    comentario = request.json.get("comentario", None)
+    
+    if not id_project:
+        return "Nombre de contrato required", 401
 
+    contrato = Contrato()
+    contrato.id_project = id_project
+    contrato.region = region
+    contrato.comuna = comuna
+    contrato.sector = sector
+    contrato.plano = plano
+    contrato.obra_descripcion = obra_descripcion
+    contrato.planta_matriz = planta_matriz
+    contrato.comentario = comentario
+
+    db.session.add(contrato)
+    db.session.commit()
+
+    response = {
+        "msg": "Added successfully",
+        "name": id_project
+    }
+    return jsonify(response), 201 #Devuelvo en texto plano
 
 
 

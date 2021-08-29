@@ -134,6 +134,21 @@ Content-Type: application/json
 
 ############################
 
+### CREAR CONTRATO
+POST {{host}}/contrato
+Content-Type: application/json
+
+{
+    "id_project": "Nombrecito bueno",
+    "region":"Metropolitana Nacional",
+    "comuna":"Que feo",
+    "sector":"Casa de mi pana",
+    "plano":"Cartesianito",
+    "obra_descripcion":"Descrita",
+    "planta_matriz":"Planta del pie",
+    "comentario":"Este es un buen proyecto"
+}
+
 ### DELETE CONTRATO
 DELETE  {{host}}/contrato/3
 Content-Type: application/json
