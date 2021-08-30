@@ -1,4 +1,4 @@
-@host=https://3001-plum-marmoset-ynjeah93.ws-us16.gitpod.io/api
+@host=https://3001-peach-llama-swhgecmo.ws-us16.gitpod.io/api
 
 ### Probar la api regresa "message": "Hello! I'm a message that came from the backend"
 POST {{host}}/hello
@@ -8,17 +8,19 @@ Content-Type: application/json
 POST {{host}}/hash
 Content-Type: application/json
 
+############################################################################################################
+
 ### DATOS DE UN USER
 GET {{host}}/user/1
 Content-Type: application/json
 #Authorization: Bearer {{token}}
 
-### REGISTER
+### REGISTER/POST DE UN USER
 POST {{host}}/user
 Content-Type: application/json
 
 {
-    "email":"Fabiz@4geeks.cl",
+    "email":"Fab5iz@4geeks.cl",
     "password":"123456",
     "rut":"blabla",
     "name":"Placido",
@@ -43,13 +45,15 @@ Content-Type: application/json
 }
 
 ### DELETE USER
-DELETE  {{host}}/user/7
+DELETE  {{host}}/user/2
 Content-Type: application/json
 
 ### USERS
 GET {{host}}/users
 Content-Type: application/json
 Authorization: Bearer {{token}}
+
+############################################################################################################
 
 ###  @AUTH
 # @name authSession
@@ -64,28 +68,35 @@ Content-Type: application/json
 ###
 @token = {{authSession.response.body.$.token}}
 
+############################################################################################################
 
-
-
-### CONTRATOS DE UN USER
-GET {{host}}/contratos_user/1
+### VER TODOS LOS CONTRATOS
+GET {{host}}/contratos
 Content-Type: application/json
 #Authorization: Bearer {{token}}
 
+### VER UN CONTRATO EN ESPECIFICO
+GET {{host}}/contrato/1
+Content-Type: application/json
+#Authorization: Bearer {{token}}
 
-### UPDATE ORDEN
-PUT {{host}}/order/1
+### CREAR CONTRATO
+POST {{host}}/contrato
 Content-Type: application/json
 
 {
-    "id_nombre":"vlevle",
-    "tipo":"Laja",
-    "direccion":"vlevle",
-    "descripcion":"vlevle"
+    "id_project": "Nombrecito bueno",
+    "region":"Metropolitana Nacional",
+    "comuna":"Que feo",
+    "sector":"Casa de mi pana",
+    "plano":"Cartesianito",
+    "obra_descripcion":"Descrita",
+    "planta_matriz":"Planta del pie",
+    "comentario":"Este es un buen proyecto"
 }
 
 ### UPDATE CONTRATO
-PUT {{host}}/lista_contratos/1
+PUT {{host}}/contrato/1
 Content-Type: application/json
 
 {
@@ -99,47 +110,61 @@ Content-Type: application/json
     "comentario":"vlevle"
 }
 
+### DELETE CONTRATO
+DELETE  {{host}}/contrato/2
+Content-Type: application/json
 
+############################################################################################################
 
-### LISTA DE TODOS LOS CONTRATOS
-GET {{host}}/lista_contratos
+### VER TODAS LAS ORDENES DE TRABAJO DE UN CONTRATO
+GET {{host}}/orders/1
 Content-Type: application/json
 #Authorization: Bearer {{token}}
 
-### DATOS DE UN CONTRATO EN ESPECIFICO
-GET {{host}}/lista_contratos/1
+### VER DATOS DE UNA ORDEN DE TRABAJO
+GET {{host}}/order/1
 Content-Type: application/json
 #Authorization: Bearer {{token}}
 
-### LISTA DE ORDENES DE TRABAJO DE UN CONTRATO
-GET {{host}}/order_trabajo/1
+### CREAR UNA ORDEN DE TRABAJO
+POST {{host}}/order
+Content-Type: application/json
+
+{
+    "id_contrato":1,
+    "id_nombre":"Mufa56",
+    "tipo":"blabla",
+    "direccion":"Casa",
+    "descripcion":"Casita"
+}
+
+### UPDATE UNA ORDEN DE TRABAJO
+PUT {{host}}/order/2
+Content-Type: application/json
+
+{
+    "id_nombre":"vlevle",
+    "tipo":"Laja",
+    "direccion":"vlevle",
+    "descripcion":"vlevle"
+}
+
+### DELETE ORDEN DE TRABAJO
+DELETE  {{host}}/order/3
+Content-Type: application/json
+
+############################################################################################################
+
+
+
+############################################################################################################
+
+### VER CONTRATOS DE UN USER ----> NO FUNCIONA
+GET {{host}}/contratos_user/1
 Content-Type: application/json
 #Authorization: Bearer {{token}}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+############################################################################################################
 
 
 {
