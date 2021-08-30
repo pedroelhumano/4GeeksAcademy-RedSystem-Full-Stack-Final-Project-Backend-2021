@@ -213,8 +213,8 @@ def login():
 
 ############################################################################################################
 
-#Ruta para la lista de los contratos
-@api.route('/lista_contratos', methods=['GET'])
+#Para ver todos los contratos
+@api.route('/contratos', methods=['GET'])
 def get_contratos():
     query_contratos = Contrato.query.all()
     query_contratos = list(map(lambda x: x.listacontratos(), query_contratos))
@@ -224,83 +224,49 @@ def get_contratos():
     }
     return jsonify(response_body), 200
 
-#Rutas para datos especificos de un contrato
-@api.route('/lista_contratos/<int:id>', methods=['GET'])
+#Para ver datos de un contrato
+@api.route('/contrato/<int:id>', methods=['GET'])
 def get_contrato(id = None):
     query_contratos = Contrato.query.filter_by(id=id).first()
     return jsonify(query_contratos.datoscontrato()), 200
 
-#Rutas para lista de ordenes de trabajo basado en un contrato
-@api.route('/order_trabajo/<int:id_contrato>', methods=['GET'])
-def get_order_trabajo_by_contrato(id_contrato = None):
-    query_order_trabajo = OrdenTrabajo.query.filter_by(id_contrato = id_contrato)
-    query_order_trabajo = list(map(lambda x: x.listaorden(), query_order_trabajo))
-    return jsonify(query_order_trabajo), 200
-
-    return jsonify(response_body), 200
-
-#API para modificar una orden de trabajo en especifico
-@api.route('/order/<int:id>', methods=['PUT'])
-def put_order_trabajo(id = None):
- if request.method == 'PUT':
-    id_nombre = request.json.get("id_nombre", None)
-    tipo = request.json.get("tipo", None)
-    direccion = request.json.get("direccion", None)
-    descripcion = request.json.get("descripcion", None)
+#Para crear un contrato
+@api.route('/contrato', methods=['POST'])
+def post_contrato():
+ if request.method == 'POST':
+    id_project = request.json.get("id_project", None)
+    region = request.json.get("region", None)
+    comuna = request.json.get("comuna", None)
+    sector = request.json.get("sector", None)
+    plano = request.json.get("plano", None)
+    obra_descripcion = request.json.get("obra_descripcion", None)
+    planta_matriz = request.json.get("planta_matriz", None)
+    comentario = request.json.get("comentario", None)
     
-    ordentrabajo = OrdenTrabajo.query.get(id)
-    if id_nombre:
-        ordentrabajo.id_nombre = id_nombre
-    if tipo:
-        ordentrabajo.tipo = tipo
-    if direccion:
-        ordentrabajo.direccion = direccion
-    if descripcion:
-        ordentrabajo.descripcion = descripcion
-    #db.session.add(user)
+    if not id_project:
+        return "Nombre de contrato required", 401
+
+    contrato = Contrato()
+    contrato.id_project = id_project
+    contrato.region = region
+    contrato.comuna = comuna
+    contrato.sector = sector
+    contrato.plano = plano
+    contrato.obra_descripcion = obra_descripcion
+    contrato.planta_matriz = planta_matriz
+    contrato.comentario = comentario
+
+    db.session.add(contrato)
     db.session.commit()
 
     response = {
-        "msg": "Changes successfully",
-        "name": id_nombre
+        "msg": "Added successfully",
+        "name": id_project
     }
     return jsonify(response), 201 #Devuelvo en texto plano
 
-#Ruta para la lista de contratos de un usuario
-@api.route('/contratos_user/<int:id>', methods=['GET'])
-def get_contratos_user(id = None):
-    query_contratos_user = UserOrden.query.filter_by(id_user=id)
-    query_contratos_user = list(map(lambda x: x.listaUserOrden(), query_contratos_user))
-    
-    """ listaNueva = []
-    for x in query_contratos_user:
-        listaNueva.append(x['id_orden'])
-    
-    listaOrdenes = []
-    for x in listaNueva:
-        listaOrdenes = OrdenTrabajo.query.get(x) """
-
-    """ listaOrdenes = []
-    listaAux = []
-    for x in listaNueva:
-        if x not in listaAux:
-            listaOrdenes.append(OrdenTrabajo.query.get(x))
-        listaAux.append(x) """
-    
-    response_body = {
-        "Contratos": query_contratos_user
-    }
-    return jsonify(response_body), 200
-
-#Lista para una orden de trabajo en especifica y sus datos, hay que revisar el conflicto
-@api.route('/order/<int:id>', methods=['GET'])
-def get_order_trabajo(id = None):
-    query_order_trabajo = OrdenTrabajo.query.filter_by(id = id).first()
-    return jsonify(query_order_trabajo.datoscorden()), 200
-
-
-#API para modificar un contrato en especifico
-@api.route('/lista_contratos/<int:id>', methods=['PUT'])
+#Para modificar un contrato
+@api.route('/contrato/<int:id>', methods=['PUT'])
 def put_contrato(id = None):
  if request.method == 'PUT':
     id_project = request.json.get("id_project", None)
@@ -337,3 +303,152 @@ def put_contrato(id = None):
         "name": id_project
     }
     return jsonify(response), 201 #Devuelvo en texto plano
+
+#Para eliminar un contrato
+@api.route('/contrato/<int:id>', methods=['DELETE'])
+def delete_contrato(id = None):
+ if request.method == 'DELETE':
+    contrato = Contrato.query.get(id)
+    """ orden = OrdenTrabajo.query.filter_by(id_contrato = id)
+    
+    while orden:
+        db.session.delete(orden)
+        orden = OrdenTrabajo.query.filter_by(id_contrato = id) """
+
+    db.session.delete(contrato)
+    db.session.commit()
+
+    response = {
+        "msg": "Delete successfully",
+        "name": contrato.id_project
+    }
+    return jsonify(response), 201 #Devuelvo en texto plano
+
+############################################################################################################
+
+#Para ver todas las ordenes de trabajo de un contrato
+@api.route('/orders/<int:id_contrato>', methods=['GET'])
+def get_order_trabajo_by_contrato(id_contrato = None):
+    query_order_trabajo = OrdenTrabajo.query.filter_by(id_contrato = id_contrato)
+    query_order_trabajo = list(map(lambda x: x.listaorden(), query_order_trabajo))
+    return jsonify(query_order_trabajo), 200
+
+    return jsonify(response_body), 200
+
+#Para ver una orden de trabajo en especifico
+@api.route('/order/<int:id>', methods=['GET'])
+def get_order_trabajo(id = None):
+    query_order_trabajo = OrdenTrabajo.query.filter_by(id = id).first()
+    return jsonify(query_order_trabajo.datoscorden()), 200
+
+#Para crear una orden de trabajo de un contrato
+@api.route('/order', methods=['POST'])
+def post_order_trabajo():
+ if request.method == 'POST':
+    id_contrato = request.json.get("id_contrato", None)
+    id_nombre = request.json.get("id_nombre", None)
+    tipo = request.json.get("tipo", None)
+    direccion = request.json.get("direccion", None)
+    descripcion = request.json.get("descripcion", None)
+    
+    if not id_contrato:
+        return "Contrato required", 401
+    contrato_query = Contrato.query.get(id_contrato)
+    if not contrato_query:
+        return "No existe ese contrato", 401
+
+    orden = OrdenTrabajo()
+    orden.id_contrato = id_contrato
+    orden.id_nombre = id_nombre
+    orden.tipo = tipo
+    orden.direccion = direccion
+    orden.descripcion = descripcion
+
+    db.session.add(orden)
+    db.session.commit()
+
+    response = {
+        "msg": "Added successfully",
+        "name": id_nombre
+    }
+    return jsonify(response), 201 #Devuelvo en texto plano
+
+#Para modificar una orden de trabajo
+@api.route('/order/<int:id>', methods=['PUT'])
+def put_order_trabajo(id = None):
+ if request.method == 'PUT':
+    id_nombre = request.json.get("id_nombre", None)
+    tipo = request.json.get("tipo", None)
+    direccion = request.json.get("direccion", None)
+    descripcion = request.json.get("descripcion", None)
+    
+    ordentrabajo = OrdenTrabajo.query.get(id)
+    if id_nombre:
+        ordentrabajo.id_nombre = id_nombre
+    if tipo:
+        ordentrabajo.tipo = tipo
+    if direccion:
+        ordentrabajo.direccion = direccion
+    if descripcion:
+        ordentrabajo.descripcion = descripcion
+    #db.session.add(user)
+    db.session.commit()
+
+    response = {
+        "msg": "Changes successfully",
+        "name": id_nombre
+    }
+    return jsonify(response), 201 #Devuelvo en texto plano
+
+#Para eliminar una orden de trabajo
+@api.route('/order/<int:id>', methods=['DELETE'])
+def delete_orden(id = None):
+ if request.method == 'DELETE':
+    order = OrdenTrabajo.query.get(id)
+    
+    db.session.delete(order)
+    db.session.commit()
+
+    response = {
+        "msg": "Delete successfully",
+        "name": order.id_nombre
+    }
+    return jsonify(response), 201 #Devuelvo en texto plano
+
+############################################################################################################
+
+
+
+############################################################################################################
+
+#Ruta para la lista de contratos de un usuario ------> NO FUNCIONA
+@api.route('/contratos_user/<int:id>', methods=['GET'])
+def get_contratos_user(id = None):
+    query_contratos_user = UserOrden.query.filter_by(id_user=id)
+    query_contratos_user = list(map(lambda x: x.listaUserOrden(), query_contratos_user))
+    
+    """ listaNueva = []
+    for x in query_contratos_user:
+        listaNueva.append(x['id_orden'])
+    
+    listaOrdenes = []
+    for x in listaNueva:
+        listaOrdenes = OrdenTrabajo.query.get(x) """
+
+    """ listaOrdenes = []
+    listaAux = []
+    for x in listaNueva:
+        if x not in listaAux:
+            listaOrdenes.append(OrdenTrabajo.query.get(x))
+        listaAux.append(x) """
+    
+    response_body = {
+        "Contratos": query_contratos_user
+    }
+    return jsonify(response_body), 200
+
+
+
+
+
+
