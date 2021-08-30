@@ -104,7 +104,7 @@ class OrdenTrabajo(db.Model):
             "id_nombre": self.id_nombre,
             "tipo": self.tipo,
             "descripcion": self.descripcion,
-            "direccion": self.descripcion
+            "direccion": self.direccion
         }
     def listaorden(self):
         return{
