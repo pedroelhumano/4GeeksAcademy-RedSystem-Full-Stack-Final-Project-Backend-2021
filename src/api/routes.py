@@ -156,7 +156,7 @@ def delete_user(id = None):
 
 #Para listar todos los usuarios de la Base de Datos
 @api.route('/users', methods=['POST', 'GET'])
-#@jwt_required() #Para obligar al uso del token en el header
+@jwt_required() #Para obligar al uso del token en el header
 def handle_users():
     users = User.query.all()
     users = list(map(lambda x: x.listausuarios(), users))
@@ -176,16 +176,16 @@ def login():
     password = request.json.get("password", None)
 
     if not email:
-        return jsonify({"msg":"Email required"}), 400
+        return jsonify({"msg":"Email requerido"}), 400
 
     if not password:
-        return jsonify({"msg":"Password required"}), 400
+        return jsonify({"msg":"Contraseña requerida"}), 400
     
     user = User.query.filter_by(email=email).first()
     print(user)
 
     if not user:
-        return jsonify({"msg": "The email is not correct",
+        return jsonify({"msg": "El email no existe",
         "status": 401
         
         }), 401
@@ -193,7 +193,7 @@ def login():
     # password=generate_password_hash(password, method='sha256')
 
     if not check_password_hash(user.password, password):
-         return jsonify({"msg": "The password is not correct",
+         return jsonify({"msg": "La contraseña no es correcta",
         "status": 401
         }), 400
 
@@ -210,6 +210,28 @@ def login():
 
 
     return jsonify(data), 200
+
+#Para cambiar la contrasena
+@api.route('/cambiarc/<int:id>', methods=['PUT'])
+def cambiarc(id = None):
+    
+    actual = request.json.get("actual", None)
+    nueva = request.json.get("nueva", None)
+    
+    user = User.query.get(id)
+
+    if not check_password_hash(user.password, actual):
+         return jsonify({"msg": "La contraseña actual no es correcta",
+        "status": 401
+        }), 400
+    hashed_password=generate_password_hash(nueva, method='sha256')
+    user.password = hashed_password
+    db.session.commit()
+
+    response = {
+        "msg": "Contraseña cambiada exitosamente"
+    }
+    return jsonify(response), 201 #Devuelvo en texto plano
 
 ############################################################################################################
 
