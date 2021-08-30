@@ -62,7 +62,7 @@ Content-Type: application/json
 
 {
     "email":"Fab5iz@4geeks.cl",
-    "password":"000000."
+    "password":"123456"
 }
 
 ###
@@ -75,6 +75,14 @@ Content-Type: application/json
 {
     "actual":"000000.",
     "nueva":"123123."
+}
+
+### RECUPERAR CONTRASENA
+PUT {{host}}/recuperarc
+Content-Type: application/json
+
+{
+    "email":"Fab5iz@4geeks.cl"
 }
 
 ############################################################################################################

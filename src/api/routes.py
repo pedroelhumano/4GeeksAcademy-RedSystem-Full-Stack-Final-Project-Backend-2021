@@ -8,7 +8,8 @@ from api.utils import generate_sitemap, APIException
 from werkzeug.security import generate_password_hash, check_password_hash       ## Nos permite manejar tokens por authentication (usuarios)    
 from flask_jwt_extended import JWTManager, create_access_token, jwt_required, get_jwt_identity   #El 2do es para crear el token y el 3ro para pedir siempre
 import datetime #Es propio de Python
-
+import random
+import string
 
 api = Blueprint('api', __name__)
 
@@ -156,7 +157,7 @@ def delete_user(id = None):
 
 #Para listar todos los usuarios de la Base de Datos
 @api.route('/users', methods=['POST', 'GET'])
-@jwt_required() #Para obligar al uso del token en el header
+#@jwt_required() #Para obligar al uso del token en el header
 def handle_users():
     users = User.query.all()
     users = list(map(lambda x: x.listausuarios(), users))
@@ -230,6 +231,34 @@ def cambiarc(id = None):
 
     response = {
         "msg": "Contraseña cambiada exitosamente"
+    }
+    return jsonify(response), 201 #Devuelvo en texto plano
+
+#Para recuperar la contrasena
+@api.route('/recuperarc', methods=['PUT'])
+def recuperarc():
+    
+    email = request.json.get("email", None)
+
+    if not email:
+        return jsonify({"msg":"Email requerido"}), 400
+    
+    user = User.query.filter_by(email=email).first()
+
+    if not user:
+        return jsonify({"msg": "El email no existe",
+        "status": 401
+        }), 401
+
+    nuevaC = (''.join(random.SystemRandom().choice(string.ascii_letters + string.digits) for _ in range(8)))
+
+    hashed_password=generate_password_hash(nuevaC, method='sha256')
+    user.password = hashed_password
+    db.session.commit()
+
+    response = {
+        "msg": "Contraseña restablecida. Revisa tu correo electrónico",
+        "contrasena": nuevaC
     }
     return jsonify(response), 201 #Devuelvo en texto plano
 
