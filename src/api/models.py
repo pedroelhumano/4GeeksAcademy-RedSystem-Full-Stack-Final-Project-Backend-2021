@@ -41,6 +41,8 @@ class Contrato(db.Model):
     plano = db.Column(db.String(120), unique=False, nullable=True)
     obra_descripcion = db.Column(db.String(200), unique=False, nullable=True)
     planta_matriz = db.Column(db.String(120), unique=False, nullable=True)
+    status = db.Column(db.String(120), unique=False, nullable=True, default="Pendiente")
+    tecnicos = db.Column(db.String(255), unique=False, nullable=True)
     #hp = db.Column(db.Integer, unique=False, nullable=False)
     comentario = db.Column(db.String(120), unique=False, nullable=True)
     fecha_registro = db.Column(db.DateTime, default = datetime.datetime.now)
@@ -70,12 +72,15 @@ class Contrato(db.Model):
             "plano": self.plano,
             "obra_descripcion": self.obra_descripcion,
             "planta_matriz": self.planta_matriz,
+            "status": self.status,
+            "tecnicos": self.tecnicos,
             "fecha_registro": self.fecha_registro,
             "comentario": self.comentario
         }
     def listacontratos(self):
         return{
             "id": self.id,
+            "status": self.status,
             #"Status": self.mostrarestado()
             "id_project": self.id_project,
             #"fecha_registro": self.fecha_registro,
@@ -88,6 +93,8 @@ class OrdenTrabajo(db.Model):
     tipo = db.Column(db.String(100), unique=False, nullable=False)
     direccion = db.Column(db.String(255), unique=False, nullable=False)
     descripcion = db.Column(db.String(255), unique=False, nullable=False)
+    status = db.Column(db.String(120), unique=False, nullable=True, default="Pendiente")
+    tecnicos = db.Column(db.String(255), unique=False, nullable=True)
     #IdForaneo
     id_contrato = db.Column(db.Integer, db.ForeignKey('contrato.id'))
     #Relaciones
@@ -104,13 +111,16 @@ class OrdenTrabajo(db.Model):
             "id_nombre": self.id_nombre,
             "tipo": self.tipo,
             "descripcion": self.descripcion,
-            "direccion": self.direccion
+            "direccion": self.direccion,
+            "status": self.status,
+            "tecnicos": self.tecnicos
         }
     def listaorden(self):
         return{
             "id": self.id,
             #"Status": self.mostrarestado()
-            "id_nombre": self.id_nombre
+            "id_nombre": self.id_nombre,
+            "status": self.status
         }
 
 class DetalleOrdenTrabajo(db.Model):
