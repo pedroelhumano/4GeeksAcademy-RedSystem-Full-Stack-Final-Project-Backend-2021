@@ -42,6 +42,7 @@ class Contrato(db.Model):
     obra_descripcion = db.Column(db.String(200), unique=False, nullable=True)
     planta_matriz = db.Column(db.String(120), unique=False, nullable=True)
     status = db.Column(db.String(120), unique=False, nullable=True, default="Pendiente")
+    tecnicos = db.Column(db.Text, unique=False, nullable=True)
     #hp = db.Column(db.Integer, unique=False, nullable=False)
     comentario = db.Column(db.String(120), unique=False, nullable=True)
     fecha_registro = db.Column(db.DateTime, default = datetime.datetime.now)
@@ -72,6 +73,7 @@ class Contrato(db.Model):
             "obra_descripcion": self.obra_descripcion,
             "planta_matriz": self.planta_matriz,
             "status": self.status,
+            "tecnicos": self.tecnicos,
             "fecha_registro": self.fecha_registro,
             "comentario": self.comentario
         }
@@ -92,6 +94,7 @@ class OrdenTrabajo(db.Model):
     direccion = db.Column(db.String(255), unique=False, nullable=False)
     descripcion = db.Column(db.String(255), unique=False, nullable=False)
     status = db.Column(db.String(120), unique=False, nullable=True, default="Pendiente")
+    tecnicos = db.Column(db.Text, unique=False, nullable=True)
     #IdForaneo
     id_contrato = db.Column(db.Integer, db.ForeignKey('contrato.id'))
     #Relaciones
@@ -109,7 +112,8 @@ class OrdenTrabajo(db.Model):
             "tipo": self.tipo,
             "descripcion": self.descripcion,
             "direccion": self.direccion,
-            "status": self.status
+            "status": self.status,
+            "tecnicos": self.tecnicos
         }
     def listaorden(self):
         return{
