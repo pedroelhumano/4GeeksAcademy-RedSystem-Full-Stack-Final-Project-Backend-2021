@@ -1,4 +1,4 @@
-@host=https://3001-scarlet-leopon-aas2fq4a.ws-us16.gitpod.io/api
+@host=https://3001-purple-limpet-udp0r87z.ws-us16.gitpod.io/api
 
 ### Probar la api regresa "message": "Hello! I'm a message that came from the backend"
 POST {{host}}/hello
@@ -20,11 +20,11 @@ POST {{host}}/user
 Content-Type: application/json
 
 {
-    "email":"Fab5iz@4geeks.cl",
+    "email":"luis14salgado@gmail.com",
     "password":"123456",
     "rut":"blabla",
-    "name":"Placido",
-    "lastname":"Perez",
+    "name":"Luis",
+    "lastname":"Salgado",
     "contact":"blabla",
     "register":"blabla",
     "perfil":"tecnico",
@@ -109,6 +109,7 @@ Content-Type: application/json
     "plano":"Cartesianito",
     "obra_descripcion":"Descrita",
     "planta_matriz":"Planta del pie",
+    "status": "",
     "comentario":"Este es un buen proyecto"
 }
 
