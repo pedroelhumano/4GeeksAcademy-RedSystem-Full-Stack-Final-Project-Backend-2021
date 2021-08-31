@@ -1,4 +1,4 @@
-@host=https://3001-purple-limpet-udp0r87z.ws-us16.gitpod.io/api
+@host=https://3001-purple-limpet-udp0r87z.ws-us15.gitpod.io/api
 
 ### Probar la api regresa "message": "Hello! I'm a message that came from the backend"
 POST {{host}}/hello
@@ -13,7 +13,7 @@ Content-Type: application/json
 ### DATOS DE UN USER
 GET {{host}}/user/1
 Content-Type: application/json
-#Authorization: Bearer {{token}}
+Authorization: Bearer {{token}}
 
 ### REGISTER/POST DE UN USER
 POST {{host}}/user
@@ -32,6 +32,7 @@ Content-Type: application/json
 ### UPDATE USER
 PUT {{host}}/user/1
 Content-Type: application/json
+Authorization: Bearer {{token}}
 
 {
     "rut":"vlevle",
@@ -44,6 +45,7 @@ Content-Type: application/json
 ### DELETE USER
 DELETE  {{host}}/user/1
 Content-Type: application/json
+Authorization: Bearer {{token}}
 
 ### USERS
 GET {{host}}/users
@@ -58,7 +60,7 @@ POST {{host}}/login
 Content-Type: application/json
 
 {
-    "email":"Fab5iz@4geeks.cl",
+    "email":"pedro@gmail.com",
     "password":"123456"
 }
 
@@ -68,6 +70,7 @@ Content-Type: application/json
 ### CAMBIAR CONTRASENA
 PUT {{host}}/cambiarc/2
 Content-Type: application/json
+Authorization: Bearer {{token}}
 
 {
     "actual":"000000.",
@@ -87,16 +90,17 @@ Content-Type: application/json
 ### VER TODOS LOS CONTRATOS
 GET {{host}}/contratos
 Content-Type: application/json
-#Authorization: Bearer {{token}}
+Authorization: Bearer {{token}}
 
 ### VER UN CONTRATO EN ESPECIFICO
 GET {{host}}/contrato/2
 Content-Type: application/json
-#Authorization: Bearer {{token}}
+Authorization: Bearer {{token}}
 
 ### CREAR CONTRATO
 POST {{host}}/contrato
 Content-Type: application/json
+Authorization: Bearer {{token}}
 
 {
     "id_project": "Nombrecito bueno",
@@ -107,12 +111,14 @@ Content-Type: application/json
     "obra_descripcion":"Descrita",
     "planta_matriz":"Planta del pie",
     "status": "",
-    "comentario":"Este es un buen proyecto"
+    "comentario":"Este es un buen proyecto",    
+    "tecnicos":"Pedro Yandel, Luis Salgado"
 }
 
 ### UPDATE CONTRATO
-PUT {{host}}/contrato/2
+PUT {{host}}/contrato/1
 Content-Type: application/json
+Authorization: Bearer {{token}}
 
 {
     "id_project":"vlevle2",
@@ -123,52 +129,59 @@ Content-Type: application/json
     "obra_descripcion":"vlevle",
     "planta_matriz":"vlevle",
     "status": "Cancelado",
-    "comentario":"vlevle"
+    "comentario":"vlevle",
+    "tecnicos":"Pedro Yandel, Luis Salgado"
 }
 
 ### DELETE CONTRATO
 DELETE  {{host}}/contrato/2
 Content-Type: application/json
+Authorization: Bearer {{token}}
 
 ############################################################################################################
 
 ### VER TODAS LAS ORDENES DE TRABAJO DE UN CONTRATO
 GET {{host}}/orders/1
 Content-Type: application/json
-#Authorization: Bearer {{token}}
+Authorization: Bearer {{token}}
 
 ### VER DATOS DE UNA ORDEN DE TRABAJO
 GET {{host}}/order/1
 Content-Type: application/json
-#Authorization: Bearer {{token}}
+Authorization: Bearer {{token}}
 
 ### CREAR UNA ORDEN DE TRABAJO
 POST {{host}}/order
 Content-Type: application/json
+Authorization: Bearer {{token}}
 
 {
-    "id_contrato":2,
+    "id_contrato":1,
     "id_nombre":"Mufa56",
     "tipo":"blabla",
     "direccion":"Casa",
-    "descripcion":"Casita"
+    "descripcion":"Casita",
+    "tecnicos":"Manuel Alejo, Felipe Venezuela"
 }
 
 ### UPDATE UNA ORDEN DE TRABAJO
-PUT {{host}}/order/2
+PUT {{host}}/order/1
 Content-Type: application/json
+Authorization: Bearer {{token}}
 
 {
     "id_nombre":"vlevle",
     "tipo":"Laja",
     "direccion":"vlevle",
     "descripcion":"vlevle",
-    "status": "Iniciado"
+    "status": "Iniciado",
+    "tecnicos":"Manuel Alejo, Felipe Venezuela"
 }
 
 ### DELETE ORDEN DE TRABAJO
 DELETE  {{host}}/order/3
 Content-Type: application/json
+Authorization: Bearer {{token}}
 
 ############################################################################################################
 
