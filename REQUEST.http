@@ -26,9 +26,7 @@ Content-Type: application/json
     "name":"Luis",
     "lastname":"Salgado",
     "contact":"blabla",
-    "register":"blabla",
-    "perfil":"tecnico",
-    "fecha_nacimiento":"20-11-1995"
+    "register":"blabla"
 }
 
 ### UPDATE USER
@@ -40,8 +38,7 @@ Content-Type: application/json
     "name":"Laja",
     "contact":"vlevle",
     "register":"vlevle",
-    "perfil":"super mega administrador",
-    "fecha_nacimiento":"31-01-1997"
+    "perfil":"super mega administrador"
 }
 
 ### DELETE USER
@@ -114,18 +111,18 @@ Content-Type: application/json
 }
 
 ### UPDATE CONTRATO
-PUT {{host}}/contrato/1
+PUT {{host}}/contrato/2
 Content-Type: application/json
 
 {
-    "id_project":"vlevle",
+    "id_project":"vlevle2",
     "region":"vlevle",
     "comuna":"vlevle",
     "sector":"vlevle",
     "plano":"vlevle",
     "obra_descripcion":"vlevle",
     "planta_matriz":"vlevle",
-    "status": "",
+    "status": "Cancelado",
     "comentario":"vlevle"
 }
 

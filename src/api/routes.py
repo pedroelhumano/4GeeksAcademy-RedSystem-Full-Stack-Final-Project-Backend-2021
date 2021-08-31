@@ -71,13 +71,13 @@ def register():
     fecha_nacimiento = request.json.get("fecha_nacimiento", None)
     
     if not email:
-        return "Email required", 401
+        return jsonify({"msg":"Email requerido"}), 401
     if not password:
-        return "Password required", 401
+        return jsonify({"msg":"Contraseña requerida"}), 401
 
     email_query = User.query.filter_by(email=email).first()
     if email_query:
-        return "This email has been already taken", 401
+        return jsonify({"msg":"Este email pertenece a otro usuario"}), 401
     
     user = User()
     user.email = email
@@ -98,7 +98,7 @@ def register():
     db.session.commit()
 
     response = {
-        "msg": "Added successfully",
+        "msg": "Usuario creado exitosamente",
         "email": email
     }
     return jsonify(response), 201 #Devuelvo en texto plano
