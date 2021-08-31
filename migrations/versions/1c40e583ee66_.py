@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: f1d0364891d0
+Revision ID: 1c40e583ee66
 Revises: 
-Create Date: 2021-08-31 08:22:07.721918
+Create Date: 2021-08-31 09:05:39.447796
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'f1d0364891d0'
+revision = '1c40e583ee66'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -28,7 +28,7 @@ def upgrade():
     sa.Column('obra_descripcion', sa.String(length=200), nullable=True),
     sa.Column('planta_matriz', sa.String(length=120), nullable=True),
     sa.Column('status', sa.String(length=120), nullable=True),
-    sa.Column('tecnicos', sa.Text(), nullable=True),
+    sa.Column('tecnicos', sa.String(length=255), nullable=True),
     sa.Column('comentario', sa.String(length=120), nullable=True),
     sa.Column('fecha_registro', sa.DateTime(), nullable=True),
     sa.PrimaryKeyConstraint('id'),
@@ -54,7 +54,7 @@ def upgrade():
     sa.Column('direccion', sa.String(length=255), nullable=False),
     sa.Column('descripcion', sa.String(length=255), nullable=False),
     sa.Column('status', sa.String(length=120), nullable=True),
-    sa.Column('tecnicos', sa.Text(), nullable=True),
+    sa.Column('tecnicos', sa.String(length=255), nullable=True),
     sa.Column('id_contrato', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['id_contrato'], ['contrato.id'], ),
     sa.PrimaryKeyConstraint('id')
