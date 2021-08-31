@@ -20,7 +20,7 @@ POST {{host}}/user
 Content-Type: application/json
 
 {
-    "email":"luis14salgado@gmail.com",
+    "email":"pedro@gmail.com",
     "password":"123456",
     "rut":"blabla",
     "name":"Luis",
@@ -93,7 +93,7 @@ Content-Type: application/json
 #Authorization: Bearer {{token}}
 
 ### VER UN CONTRATO EN ESPECIFICO
-GET {{host}}/contrato/1
+GET {{host}}/contrato/2
 Content-Type: application/json
 #Authorization: Bearer {{token}}
 
@@ -125,6 +125,7 @@ Content-Type: application/json
     "plano":"vlevle",
     "obra_descripcion":"vlevle",
     "planta_matriz":"vlevle",
+    "status": "",
     "comentario":"vlevle"
 }
 
@@ -149,7 +150,7 @@ POST {{host}}/order
 Content-Type: application/json
 
 {
-    "id_contrato":1,
+    "id_contrato":2,
     "id_nombre":"Mufa56",
     "tipo":"blabla",
     "direccion":"Casa",
@@ -164,7 +165,8 @@ Content-Type: application/json
     "id_nombre":"vlevle",
     "tipo":"Laja",
     "direccion":"vlevle",
-    "descripcion":"vlevle"
+    "descripcion":"vlevle",
+    "status": "Iniciado"
 }
 
 ### DELETE ORDEN DE TRABAJO

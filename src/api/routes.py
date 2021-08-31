@@ -327,25 +327,28 @@ def put_contrato(id = None):
     plano = request.json.get("plano", None)
     obra_descripcion = request.json.get("obra_descripcion", None)
     planta_matriz = request.json.get("planta_matriz", None)
+    status = request.json.get("status", None)
     comentario = request.json.get("comentario", None)
 
-    ordentrabajo = Contrato.query.get(id)
+    contrato = Contrato.query.get(id)
     if id_project:
-        ordentrabajo.id_project = id_project
+        contrato.id_project = id_project
     if region:
-        ordentrabajo.region = region
+        contrato.region = region
     if comuna:
-        ordentrabajo.comuna = comuna
+        contrato.comuna = comuna
     if sector:
-        ordentrabajo.sector = sector
+        contrato.sector = sector
     if plano:
-        ordentrabajo.plano = plano
+        contrato.plano = plano
     if obra_descripcion:
-        ordentrabajo.obra_descripcion = obra_descripcion
+        contrato.obra_descripcion = obra_descripcion
     if planta_matriz:
-        ordentrabajo.planta_matriz = planta_matriz
+        contrato.planta_matriz = planta_matriz
+    if status:
+        contrato.status = status
     if comentario:
-        ordentrabajo.comentario = comentario
+        contrato.comentario = comentario
     #db.session.add(user)
     db.session.commit()
 
@@ -432,6 +435,7 @@ def put_order_trabajo(id = None):
     tipo = request.json.get("tipo", None)
     direccion = request.json.get("direccion", None)
     descripcion = request.json.get("descripcion", None)
+    status = request.json.get("status", None)
     
     ordentrabajo = OrdenTrabajo.query.get(id)
     if id_nombre:
@@ -442,6 +446,8 @@ def put_order_trabajo(id = None):
         ordentrabajo.direccion = direccion
     if descripcion:
         ordentrabajo.descripcion = descripcion
+    if status:
+        ordentrabajo.status = status
     #db.session.add(user)
     db.session.commit()
 
