@@ -1,4 +1,4 @@
-@host=https://3001-peach-llama-swhgecmo.ws-us16.gitpod.io/api
+@host=https://3001-scarlet-leopon-aas2fq4a.ws-us16.gitpod.io/api
 
 ### Probar la api regresa "message": "Hello! I'm a message that came from the backend"
 POST {{host}}/hello
@@ -45,7 +45,7 @@ Content-Type: application/json
 }
 
 ### DELETE USER
-DELETE  {{host}}/user/2
+DELETE  {{host}}/user/1
 Content-Type: application/json
 
 ### USERS
@@ -61,12 +61,29 @@ POST {{host}}/login
 Content-Type: application/json
 
 {
-    "email":"holas@pedro.cl",
+    "email":"Fab5iz@4geeks.cl",
     "password":"123456"
 }
 
 ###
 @token = {{authSession.response.body.$.token}}
+
+### CAMBIAR CONTRASENA
+PUT {{host}}/cambiarc/2
+Content-Type: application/json
+
+{
+    "actual":"000000.",
+    "nueva":"123123."
+}
+
+### RECUPERAR CONTRASENA
+PUT {{host}}/recuperarc
+Content-Type: application/json
+
+{
+    "email":"Fab5iz@4geeks.cl"
+}
 
 ############################################################################################################
 
