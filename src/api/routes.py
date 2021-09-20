@@ -342,6 +342,11 @@ def put_contrato(id = None):
     tecnicos = request.json.get("tecnicos", None)
 
     contrato = Contrato.query.get(id)
+
+    if status == "Finalizado":
+        if not tecnicos:
+            return jsonify({"msg":"No se puede finalizar un contrato si no tiene técnicos asignados"}), 400
+
     if id_project:
         contrato.id_project = id_project
     if region:
@@ -377,6 +382,7 @@ def put_contrato(id = None):
 def delete_contrato(id = None):
  if request.method == 'DELETE':
     contrato = Contrato.query.get(id)
+
     """ orden = OrdenTrabajo.query.filter_by(id_contrato = id)
     
     while orden:
@@ -459,6 +465,11 @@ def put_order_trabajo(id = None):
     tecnicos = request.json.get("tecnicos", None)
     
     ordentrabajo = OrdenTrabajo.query.get(id)
+
+    if status == "Finalizado":
+        if not tecnicos:
+            return jsonify({"msg":"No se puede finalizar una orden de trabajo si no tiene técnicos asignados"}), 400
+
     if id_nombre:
         ordentrabajo.id_nombre = id_nombre
     if tipo:
