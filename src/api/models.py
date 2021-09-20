@@ -163,7 +163,7 @@ class User(db.Model):
     name = db.Column(db.String(100), unique=False, nullable=True)
     lastname = db.Column(db.String(100), unique=False, nullable=True)
     contact = db.Column(db.String(120), unique=False, nullable=True)
-    perfil = db.Column(db.String(40), unique=False, nullable=True, default ="Admin")
+    perfil = db.Column(db.String(40), unique=False, nullable=True, default ="Tecnico")
     fecha_nacimiento = db.Column(db.String(200), unique=False, nullable=True)
     fecha_registro = db.Column(db.DateTime, default = datetime.datetime.now)
     #Relación

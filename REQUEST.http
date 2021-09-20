@@ -1,4 +1,4 @@
-@host=https://3001-purple-limpet-udp0r87z.ws-us15.gitpod.io/api
+@host=https://3001-blush-coral-a7x6hw6w.ws-us15.gitpod.io/api
 
 ### Probar la api regresa "message": "Hello! I'm a message that came from the backend"
 POST {{host}}/hello
@@ -20,13 +20,14 @@ POST {{host}}/user
 Content-Type: application/json
 
 {
-    "email":"pedro@gmail.com",
+    "email":"Pedro@gmail.com",
     "password":"123456",
-    "rut":"blabla",
-    "name":"Luis",
-    "lastname":"Salgado",
-    "contact":"blabla",
-    "register":"blabla"
+    "rut":"12.123.123-K",
+    "name":"Pedro",
+    "lastname":"Yanez",
+    "contact":"04215141252",
+    "register":"blabla",
+    "perfil":"Admin"
 }
 
 ### UPDATE USER
@@ -93,7 +94,7 @@ Content-Type: application/json
 Authorization: Bearer {{token}}
 
 ### VER UN CONTRATO EN ESPECIFICO
-GET {{host}}/contrato/2
+GET {{host}}/contrato/4
 Content-Type: application/json
 Authorization: Bearer {{token}}
 
@@ -116,7 +117,7 @@ Authorization: Bearer {{token}}
 }
 
 ### UPDATE CONTRATO
-PUT {{host}}/contrato/1
+PUT {{host}}/contrato/2
 Content-Type: application/json
 Authorization: Bearer {{token}}
 
@@ -128,7 +129,7 @@ Authorization: Bearer {{token}}
     "plano":"vlevle",
     "obra_descripcion":"vlevle",
     "planta_matriz":"vlevle",
-    "status": "Cancelado",
+    "status": "Finalizado",
     "comentario":"vlevle",
     "tecnicos":"Pedro Yandel, Luis Salgado"
 }
