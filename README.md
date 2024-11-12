@@ -53,3 +53,8 @@ pipenv run start
 
 ### Main Developers
 [![Contribuidores](https://contrib.rocks/image?repo=wotanCode/4GeeksAcademy-RedSystem-Full-Stack-Final-Project-Backend-2021&max=500&columns=5)](https://github.com/wotanCode/4GeeksAcademy-RedSystem-Full-Stack-Final-Project-Backend-2021/graphs/contributors)
+
+<hr/>
+
+### Licencia
+Este proyecto está bajo la Licencia MIT.
